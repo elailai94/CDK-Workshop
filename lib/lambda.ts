@@ -1,3 +1,4 @@
+import * as cdk from "aws-cdk-lib";
 import * as lambda from "aws-cdk-lib/aws-lambda-nodejs";
 import * as path from "path";
 
@@ -21,6 +22,11 @@ class Lambda extends Construct {
       entry: path.join(__dirname, "..", "lambda", "index.ts"),
       handler: "sayHello",
       runtime: Runtime.NODEJS_16_X,
+    });
+
+    new cdk.CfnOutput(this, "FunctionName", {
+      exportName: "FunctionName",
+      value: this.nodejsFunction.functionName,
     });
   }
 }

@@ -40,6 +40,9 @@ The `cdk diff` command compares the current version of the stack (and its depend
 ### Stack Deployment
 The `cdk deploy` command deploys the stack to the default AWS account and region.
 
+### Stack Watching
+The `cdk watch` command continuously monitors the CDK app's source files and assets for changes and immediately performs a deployment of the stack when a change is detected.
+  
 ### Stack Destruction
 The `cdk destroy` command destroys the stack by removing resources according to their deletion policy. This command should be ran when the stack is no longer needed.
 

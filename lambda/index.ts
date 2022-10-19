@@ -9,7 +9,7 @@ async function sayHello(
   console.log(`request: ${JSON.stringify(event, undefined, 2)}`);
 
   return {
-    body: `Hello CDK! You've hit ${event.rawPath}\n`,
+    body: `Good Night, CDK! You've hit ${event.rawPath}\n`,
     headers: { "Content-Type": "text/plain" },
     statusCode: 200,
   };
