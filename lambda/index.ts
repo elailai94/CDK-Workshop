@@ -3,9 +3,9 @@ import {
   APIGatewayProxyStructuredResultV2,
 } from "aws-lambda";
 
-function sayHello(
+async function sayHello(
   event: APIGatewayProxyEventV2
-): APIGatewayProxyStructuredResultV2 {
+): Promise<APIGatewayProxyStructuredResultV2> {
   console.log(`request: ${JSON.stringify(event, undefined, 2)}`);
 
   return {
