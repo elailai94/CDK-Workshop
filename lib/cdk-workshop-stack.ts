@@ -7,7 +7,9 @@ export class CdkWorkshopStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const lambda = new Lambda(this, "HelloLambda");
+    const lambda = new Lambda(this, "HelloLambda", {
+      handler: "sayHello",
+    });
     cdk.Tags.of(lambda).add("Module", "Function");
 
     const apiGateway = new APIGateway(this, "HelloAPIGateway", {

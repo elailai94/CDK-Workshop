@@ -1,12 +1,12 @@
 import * as apigateway from "@aws-cdk/aws-apigatewayv2-alpha";
 import * as cdk from "aws-cdk-lib";
-import * as lambda from "aws-cdk-lib/aws-lambda-nodejs";
+import * as lambda from "aws-cdk-lib/aws-lambda";
 
 import { Construct } from "constructs";
 import { HttpLambdaIntegration } from "@aws-cdk/aws-apigatewayv2-integrations-alpha";
 
 interface Route {
-  handler: lambda.NodejsFunction;
+  handler: lambda.IFunction;
   path: string;
 }
 
