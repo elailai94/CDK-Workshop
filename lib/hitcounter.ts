@@ -32,6 +32,9 @@ class HitCounter extends Construct {
 
     // Grant the lambda role read/write permissions to our table
     table.grantReadWriteData(this.lambda.nodejsFunction);
+
+    // Grant the lambda role invoke permissions to the downstream function
+    props.downstream.grantInvoke(this.lambda.nodejsFunction);
   }
 }
 
