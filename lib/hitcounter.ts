@@ -19,6 +19,7 @@ class HitCounter extends Construct {
 
     this.table = new dynamodb.Table(this, "Hits", {
       partitionKey: { name: "path", type: dynamodb.AttributeType.STRING },
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
     cdk.Tags.of(this.table).add("Module", "DynamoDB");
 
