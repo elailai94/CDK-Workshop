@@ -5,7 +5,7 @@ import { HitCounter } from "./hitcounter";
 import { Lambda } from "./lambda";
 import { TableViewer } from "cdk-dynamo-table-viewer";
 
-export class CdkWorkshopStack extends cdk.Stack {
+class CdkWorkshopStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
@@ -20,7 +20,9 @@ export class CdkWorkshopStack extends cdk.Stack {
     cdk.Tags.of(hitCounter).add("Module", "HitCounter");
 
     const apiGateway = new APIGateway(this, "HelloAPIGateway", {
-      routes: [{ handler: hitCounter.lambda.nodejsFunction, path: "/{proxy+}" }],
+      routes: [
+        { handler: hitCounter.lambda.nodejsFunction, path: "/{proxy+}" },
+      ],
     });
     cdk.Tags.of(apiGateway).add("Module", "API");
 
@@ -32,3 +34,5 @@ export class CdkWorkshopStack extends cdk.Stack {
     cdk.Tags.of(tableViewer).add("Module", "TableViewer");
   }
 }
+
+export { CdkWorkshopStack };
