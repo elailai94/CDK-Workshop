@@ -37,6 +37,20 @@ test("hits dynamodb table created with encryption", () => {
   });
 });
 
+test("hits dynamodb table read capacity can be configured", () => {
+  const stack = new cdk.Stack();
+  const lambda = new Lambda(stack, "TestLambda", {
+    handler: "sayHello",
+  });
+
+  expect(() => {
+    new HitCounter(stack, "TestHitCounter", {
+      downstream: lambda.nodejsFunction,
+      readCapacity: 3,
+    });
+  }).toThrowError(/readCapacity must be greater than 5 and less than 20/);
+});
+
 test("hits lambda function has environment variables", () => {
   const stack = new cdk.Stack();
   const lambda = new Lambda(stack, "TestLambda", {

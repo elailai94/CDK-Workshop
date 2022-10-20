@@ -8,6 +8,15 @@ import { Lambda } from "./lambda";
 interface HitCounterProps {
   // The function for which we want to count url hits
   downstream: lambda.IFunction;
+
+  /**
+   * The read capacity units for the table
+   *
+   * Must be greater than 5 and less than 20
+   *
+   * @default 5
+   */
+  readCapacity?: number;
 }
 
 class HitCounter extends Construct {
@@ -15,11 +24,19 @@ class HitCounter extends Construct {
   public readonly table: dynamodb.Table;
 
   constructor(scope: Construct, id: string, props: HitCounterProps) {
+    if (
+      props.readCapacity !== undefined &&
+      (props.readCapacity < 5 || props.readCapacity > 20)
+    ) {
+      throw new Error("readCapacity must be greater than 5 and less than 20");
+    }
+
     super(scope, id);
 
     this.table = new dynamodb.Table(this, "Hits", {
       encryption: dynamodb.TableEncryption.AWS_MANAGED,
       partitionKey: { name: "path", type: dynamodb.AttributeType.STRING },
+      readCapacity: props.readCapacity ?? 5,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
     cdk.Tags.of(this.table).add("Module", "DynamoDB");
