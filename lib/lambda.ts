@@ -17,7 +17,7 @@ class Lambda extends Construct {
   constructor(scope: Construct, id: string, props: LambdaProps) {
     super(scope, id);
 
-    this.nodejsFunction = new lambda.NodejsFunction(this, "SayHelloFunction", {
+    this.nodejsFunction = new lambda.NodejsFunction(this, `${id}Function`, {
       architecture: Architecture.X86_64,
       bundling: {
         externalModules: ["aws-sdk"],
@@ -29,7 +29,7 @@ class Lambda extends Construct {
     });
 
     new cdk.CfnOutput(this, "FunctionName", {
-      exportName: "FunctionName",
+      exportName: `${id}FunctionName`,
       value: this.nodejsFunction.functionName,
     });
   }

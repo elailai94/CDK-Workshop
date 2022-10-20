@@ -29,6 +29,9 @@ class HitCounter extends Construct {
       handler: "countHit",
     });
     cdk.Tags.of(this.lambda).add("Module", "Function");
+
+    // Grant the lambda role read/write permissions to our table
+    table.grantReadWriteData(this.lambda.nodejsFunction);
   }
 }
 
