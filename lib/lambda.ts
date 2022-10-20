@@ -7,6 +7,7 @@ import { Architecture, Runtime } from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 
 interface LambdaProps {
+  environment?: lambda.NodejsFunctionProps["environment"];
   handler: string;
 }
 
@@ -22,6 +23,7 @@ class Lambda extends Construct {
         externalModules: ["aws-sdk"],
       },
       entry: path.join(__dirname, "..", "lambda", "index.ts"),
+      environment: props.environment,
       handler: props.handler,
       runtime: Runtime.NODEJS_16_X,
     });
