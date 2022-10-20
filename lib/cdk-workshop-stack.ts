@@ -25,6 +25,7 @@ export class CdkWorkshopStack extends cdk.Stack {
     cdk.Tags.of(apiGateway).add("Module", "API");
 
     const tableViewer = new TableViewer(this, "HelloHitsTableViewer", {
+      sortBy: "-hits",
       table: hitCounter.table,
       title: "Hello Hits",
     });
