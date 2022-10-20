@@ -12,26 +12,27 @@ interface HitCounterProps {
 
 class HitCounter extends Construct {
   public readonly lambda: Lambda;
+  public readonly table: dynamodb.Table;
 
   constructor(scope: Construct, id: string, props: HitCounterProps) {
     super(scope, id);
 
-    const table = new dynamodb.Table(this, "Hits", {
+    this.table = new dynamodb.Table(this, "Hits", {
       partitionKey: { name: "path", type: dynamodb.AttributeType.STRING },
     });
-    cdk.Tags.of(table).add("Module", "DynamoDB");
+    cdk.Tags.of(this.table).add("Module", "DynamoDB");
 
     this.lambda = new Lambda(this, "HitsLambda", {
       environment: {
         DOWNSTREAM_FUNCTION_NAME: props.downstream.functionName,
-        HITS_TABLE_NAME: table.tableName,
+        HITS_TABLE_NAME: this.table.tableName,
       },
       handler: "countHit",
     });
     cdk.Tags.of(this.lambda).add("Module", "Function");
 
     // Grant the lambda role read/write permissions to our table
-    table.grantReadWriteData(this.lambda.nodejsFunction);
+    this.table.grantReadWriteData(this.lambda.nodejsFunction);
 
     // Grant the lambda role invoke permissions to the downstream function
     props.downstream.grantInvoke(this.lambda.nodejsFunction);

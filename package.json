@@ -25,6 +25,7 @@
     "@aws-cdk/aws-apigatewayv2-alpha": "2.46.0-alpha.0",
     "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.46.0-alpha.0",
     "aws-cdk-lib": "2.46.0",
+    "cdk-dynamo-table-viewer": "^0.2.299",
     "constructs": "^10.1.134"
   }
 }
