@@ -18,6 +18,7 @@ class HitCounter extends Construct {
     super(scope, id);
 
     this.table = new dynamodb.Table(this, "Hits", {
+      encryption: dynamodb.TableEncryption.AWS_MANAGED,
       partitionKey: { name: "path", type: dynamodb.AttributeType.STRING },
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
