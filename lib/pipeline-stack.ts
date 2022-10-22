@@ -19,7 +19,7 @@ class PipelineStack extends cdk.Stack {
 
     const synth = new CodeBuildStep("SynthStep", {
       input: CodePipelineSource.codeCommit(repository, "main"),
-      installCommands: ["npm install -g aws-cdk", "npm install"],
+      installCommands: ["npm install -g aws-cdk"],
       commands: ["npm ci", "npm run build", "npx cdk synth"],
     });
 
