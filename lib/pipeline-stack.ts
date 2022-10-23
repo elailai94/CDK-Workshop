@@ -19,8 +19,6 @@ class PipelineStack extends cdk.Stack {
     });
 
     const synth = new CodeBuildStep("SynthStep", {
-      input: CodePipelineSource.codeCommit(repository, "main"),
-      installCommands: ["npm install -g aws-cdk"],
       commands: [
         "npm install",
         "cd lambda",
@@ -29,6 +27,8 @@ class PipelineStack extends cdk.Stack {
         "npm run build",
         "npx cdk synth",
       ],
+      input: CodePipelineSource.codeCommit(repository, "main"),
+      installCommands: ["npm install -g aws-cdk"],
     });
 
     const codePipeline = new CodePipeline(this, "CodePipeline", {
@@ -38,6 +38,27 @@ class PipelineStack extends cdk.Stack {
 
     const deploy = new PipelineStage(this, "Deploy");
     const stageDeployment = codePipeline.addStage(deploy);
+
+    stageDeployment.addPost(
+      new CodeBuildStep("TestTableViewerURL", {
+        commands: ["curl -Ssf $ENDPOINT_URL"],
+        envFromCfnOutputs: {
+          ENDPOINT_URL: deploy.tableViewerURL,
+        },
+        projectName: "TestTableViewerURL",
+      }),
+      new CodeBuildStep("TestAPIGatewayURL", {
+        commands: [
+          "curl -Ssf $ENDPOINT_URL",
+          "curl -Ssf $ENDPOINT_URL/hello",
+          "curl -Ssf $ENDPOINT_URL/test",
+        ],
+        envFromCfnOutputs: {
+          ENDPOINT_URL: deploy.apiGatewayURL,
+        },
+        projectName: "TestAPIGatewayURL",
+      })
+    );
   }
 }
 
