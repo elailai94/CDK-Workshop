@@ -21,9 +21,9 @@ class PipelineStack extends cdk.Stack {
       input: CodePipelineSource.codeCommit(repository, "main"),
       installCommands: ["npm install -g aws-cdk"],
       commands: [
-        "npm ci",
+        "npm install",
         "cd lambda",
-        "npm ci",
+        "npm install",
         "cd ..",
         "npm run build",
         "npx cdk synth",
