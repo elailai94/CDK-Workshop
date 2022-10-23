@@ -7,6 +7,9 @@ import { Lambda } from "./lambda";
 import { TableViewer } from "cdk-dynamo-table-viewer";
 
 class CdkWorkshopStack extends cdk.Stack {
+  public readonly apiGatewayURL: cdk.CfnOutput;
+  public readonly tableViewerURL: cdk.CfnOutput;
+
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
@@ -33,6 +36,14 @@ class CdkWorkshopStack extends cdk.Stack {
       title: "Hello Hits",
     });
     cdk.Tags.of(tableViewer).add("Module", "TableViewer");
+
+    this.apiGatewayURL = new cdk.CfnOutput(this, "APIGatewayURL", {
+      value: apiGateway.httpAPI.url!,
+    });
+
+    this.tableViewerURL = new cdk.CfnOutput(this, "TableViewerURL", {
+      value: tableViewer.endpoint,
+    });
   }
 }
 

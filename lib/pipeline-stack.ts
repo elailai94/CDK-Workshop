@@ -36,8 +36,8 @@ class PipelineStack extends cdk.Stack {
       synth,
     });
 
-    const deployStage = new PipelineStage(this, "DeployStage");
-    const stageDeployment = codePipeline.addStage(deployStage);
+    const deploy = new PipelineStage(this, "Deploy");
+    const stageDeployment = codePipeline.addStage(deploy);
   }
 }
 
