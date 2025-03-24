@@ -24,7 +24,7 @@
   "dependencies": {
     "@aws-cdk/aws-apigatewayv2-alpha": "2.47.0-alpha.0",
     "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.47.0-alpha.0",
-    "aws-cdk-lib": "2.47.0",
+    "aws-cdk-lib": "2.184.0",
     "cdk-dynamo-table-viewer": "^0.2.303",
     "constructs": "^10.1.138"
   }
